@@ -657,4 +657,4 @@ kill -9 <PID>
 
 **Built with ❤️ for Goa Resort Management**
 
-For more information, visit: [https://crazycoupons.co.in](https://crazycoupons.co.in)
+For more information, visit: [https://crazy-coupons.co.in](https://crazy-coupons.co.in)
