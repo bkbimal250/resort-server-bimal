@@ -11,6 +11,29 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://crazy-coupons.in',
+    'https://resort-server-bimal.onrender.com'
+  ];
+  
+  // CORS options with origin check
+  const corsOptions = {
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, curl, Postman)
+      if (!origin) return callback(null, true);
+  
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  };
+  
+  // Apply CORS middleware with options
+  app.use(cors(corsOptions));
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://crazycoupons08:YBgTsd6ugps1nsg9@cluster0.im6cmnt.mongodb.net/crazycoupons')
 .then(() => console.log('Connected to MongoDB'))
@@ -19,6 +42,8 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://crazycoupons08:YBgTsd6u
 // Routes
 const userRoutes = require('./routes/userRoutes');
 const enquiryRoutes = require('./routes/enquiryRoutes');
+
+
 
 app.use('/api/users', userRoutes);
 app.use('/api/enquiries', enquiryRoutes);
@@ -32,18 +57,7 @@ app.get('/health', (req, res) => {
     });
 });
 
-// Root route
-app.get('/', (req, res) => {
-    res.json({
-        message: 'Welcome to Goa Resort API',
-        version: '1.0.0',
-        endpoints: {
-            users: '/api/users',
-            enquiries: '/api/enquiries',
-            health: '/health'
-        }
-    });
-});
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
