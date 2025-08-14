@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const allowedOrigins = [
     'http://localhost:5173',
     'https://crazy-coupons.in',
+    'https://www.crazy-coupons.in',
     'https://resort-server-bimal.onrender.com'
   ];
   
